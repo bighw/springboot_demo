@@ -1,0 +1,41 @@
+system: #系统常量配置
+  constants:
+    SYSTEMID: 0
+    SYSTEMNAME: test
+server: #服务端口
+  port: 8081
+spring:
+  redis:  #redis配置
+    host: 192.168.1.204
+    port: 6379
+    password: 123456
+    database: 0
+    max-active: 500
+    max-idle: 200
+    max-wait: 20000
+  datasource: #全局数据库连接
+    tomcat:
+      max-active: 50
+      max-wait: 10000
+      test-on-borrow: true
+  jackson:
+    serialization-inclusion:  NON_NULL
+#  http:
+#    converters:
+#      preferred-json-mapper:  gson     #converters 默认为jackson
+datasource: #多数据源配置
+  user:
+    url: jdbc:mysql://192.168.1.204:3306/d_demo_user
+    driver-class-name: com.mysql.jdbc.Driver
+    username: web
+    password: 123456
+  card:
+    url: jdbc:mysql://192.168.1.204:3306/d_demo_card
+    driver-class-name: com.mysql.jdbc.Driver
+    username: web
+    password: 123456
+# nsq host 和 port的配置
+nsq:
+  host: 192.168.1.204
+  tcp-port: 4150
+  http-port: 4171

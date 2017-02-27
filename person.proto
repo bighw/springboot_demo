@@ -1,0 +1,16 @@
+syntax = "proto3";
+// 指定生成的java类的名称
+option java_outer_classname = "PersonProto";
+
+message Person {
+  string name = 1;
+  int32 age = 2;
+  double salary = 3;
+  string country = 4;
+  string email = 5;
+  string phone = 6;
+  string address = 7;
+  int32 id = 8;
+  string nickName = 9;
+  int64 account = 10;
+}

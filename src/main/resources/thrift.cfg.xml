@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="MovieSocketPool" class="com.maizuo.thirft.pool.ThriftSocketPool">
+        <property name="serviceAddress">
+            <map>
+                <entry key="i1.maizuo.com">
+                    <value>11004</value>
+                </entry>
+            </map>
+        </property>
+        <property name="maxActive" value="1000"/>
+        <property name="maxIdle" value="50"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="conTimeOut" value="9000"/>
+    </bean>
+</beans>

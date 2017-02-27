@@ -1,0 +1,57 @@
+# 配置外网访问入口，集群内部服务不用配置
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ing
+spec:
+  rules:
+  - host: demo.maizuo.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: demo
+          servicePort: 80
+---
+# 配置负载均衡服务
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+  labels:
+    app: demo
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: demo
+---
+# 配置部署信息
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: demo
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo
+        image: reg.miz.so/sbtest/sbdemo:v1.0.1
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /usr/local/tomcat/logs/demo
+          name: demo-volume
+        command: ["/bin/sh","-c"] #自定义命令
+        args: ["echo 192.168.1.204 bcnew.maizuo.com >> /etc/hosts
+        && java -jar -Dspring.profiles.active=local /usr/local/tomcat/demo/springboot_demo.jar"]
+      volumes:
+      - hostPath:
+          path: /data/logs/demo
+        name: demo-volume

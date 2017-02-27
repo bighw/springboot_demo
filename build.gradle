@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url "http://nexus.miz.so:8081/nexus/content/groups/public" }
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+//apply plugin: 'war'
+//apply plugin: 'jar'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 1.7
+
+springBoot {
+    mainClass = 'com.maizuo.Application'
+}
+
+//war{
+//    baseName='demo'
+//    version='1.0.0'
+//}
+
+jar {
+    baseName = 'springboot_demo'
+    version = '1.0.0'
+}
+
+repositories {
+    mavenLocal()
+    maven { url "http://nexus.miz.so:8081/nexus/content/groups/public" }
+}
+
+dependencies {
+
+    //spring-boot依赖
+    compile("org.springframework.boot:spring-boot-starter-web")
+//    //外部依赖tomcat
+//    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-configuration-processor")
+    compile("org.springframework.boot:spring-boot-starter-test")
+    compile("org.springframework.boot:spring-boot-starter-batch")
+
+    //第三方依赖
+    compile("mysql:mysql-connector-java:5.1.6")
+    compile("com.google.code.gson:gson:2.7")
+    compile("com.google.guava:guava:19.0")
+    compile("junit:junit:4.12")
+    compile("joda-time:joda-time:2.9.4")
+    compile("commons-pool:commons-pool:1.3")
+    compile("com.maizuo:thriftpool:0.0.1")
+    compile("org.apache.thrift:libthrift:0.6.1") {
+        exclude module: "servlet-api"
+    }
+    compile("org.apache.httpcomponents:httpcore:4.4.4")
+    compile("org.apache.httpcomponents:httpclient:4.5.1")
+    compile("org.apache.httpcomponents:httpmime:4.3.4")
+    compile("org.apache.httpcomponents:httpcore-nio:4.3.2")
+    compile("com.google.protobuf:protobuf-java:3.0.0")
+
+    //内部依赖
+
+    compile("com.maizuo.api:moviebase:0.0.2")
+    compile("com.maizuo.api:commons:0.0.7") // nsq 也需要
+    compile("com.maizuo:thriftpool:0.0.1")
+    compile("com.hyx:config:0.7") // nsq 也需要
+
+    //nsq 相关依赖
+    compile("com.maizuo.api:nsqpool:0.0.3")
+    compile("org.apache.commons:commons-pool2:2.0")
+
+    configurations {
+        all*.exclude module: 'slf4j-log4j12'
+        all*.exclude module: 'spring-boot-starter-logging'
+    }
+}
